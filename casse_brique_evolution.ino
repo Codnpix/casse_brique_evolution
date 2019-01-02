@@ -35,6 +35,7 @@ float speedX;//declarés en float pour pouvoir calculer une variation d'angle
 int ballY;
 int speedY;
 const int BALL_RADIUS = 1; //la balle sera un cercle
+const float ANGLE_CORRECTOR = 0.40;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
 
 //palette
 const int PAD_W = 14;
