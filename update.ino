@@ -85,8 +85,8 @@ void updateGame() {
           gb.sound.playTick();
           speedY = 1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
       }
       if (ballTop - 1 == briqueBottom 
       && int_ballX <= briqueRight + 1 
@@ -95,8 +95,8 @@ void updateGame() {
           gb.sound.playTick();
           speedY = 1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
       }
       if (ballBottom + 1 == briqueTop
       && int_ballX + BALL_RADIUS >= briqueLeft - 1 
@@ -105,8 +105,8 @@ void updateGame() {
           gb.sound.playTick();
           speedY = -1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
       }
       if (ballBottom + 1 == briqueTop
       && int_ballX >= briqueRight + 1 
@@ -115,8 +115,9 @@ void updateGame() {
           gb.sound.playTick();
           speedY = -1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
+        
       }
 
       
@@ -128,8 +129,9 @@ void updateGame() {
           gb.sound.playTick();
           speedX = -1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
+        
       }
       if (ballRight - 1 == briqueLeft 
       && int_ballY <= briqueBottom + 1 
@@ -138,8 +140,8 @@ void updateGame() {
           gb.sound.playTick();
           speedY = 1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
       }
       if (ballLeft - 1 == briqueRight
       && int_ballY + BALL_RADIUS >= briqueTop - 1 
@@ -148,8 +150,8 @@ void updateGame() {
           gb.sound.playTick();
           speedY = -1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
       }
       if (ballLeft - 1 == briqueRight
       && int_ballY <= briqueBottom + 1 
@@ -158,8 +160,8 @@ void updateGame() {
           gb.sound.playTick();
           speedY = -1;
           briques[rangee][colonne].state --;
+          touched = true;
         }
-        touched = true;
       }
       
       //pour les collisions sur les côtés des briques
