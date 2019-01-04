@@ -51,12 +51,17 @@ void updateGame() {
   //perdu !(si on passe en dessous de la ligne sous la palette
   if (ballY + BALL_SIZE > PAD_Y + PAD_H + 1) {
     gb.display.clear();
-    gb.sound.tone(200,200);
-    gb.sound.tone(400,200);
-    delay(200);
-    gb.sound.tone(100,800);
-    gb.sound.tone(150,800);
+    gb.display.fontSize = 2;
+    gb.display.setCursor(8,gb.display.height() / 2);
+    gb.display.print("You lose");
+        
+    gb.sound.tone(150,150);
+    gb.sound.tone(215,150);
+    delay(150);
+    gb.sound.tone(140,800);
+    gb.sound.tone(205,800);
     delay(800);
+    
     initGame();
   }
 
@@ -125,6 +130,26 @@ void updateGame() {
       }
       if (zeroBriques) {
         currentLevel ++;
+        gb.display.clear();
+        
+        /*gb.display.fontSize = 2;
+        gb.display.setCursor(14, gb.display.height() / 2);
+        gb.display.print("LEVEL ");
+        gb.display.print(currentLevel);*/
+        
+        gb.display.fontSize = 2;
+        gb.display.setCursor(10,gb.display.height() / 2);
+        gb.display.print("You win");
+        
+        gb.sound.tone(300,100);
+        gb.sound.tone(230,100);
+        delay(120);
+        gb.sound.tone(340,100);
+        gb.sound.tone(400,100);
+        delay(120);
+        gb.sound.tone(360,600);
+        gb.sound.tone(600,600);
+        delay(620);
         initGame();
       }
     }

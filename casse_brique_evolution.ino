@@ -2,7 +2,7 @@
 
 bool launched;
 
-int currentLevel = 3;
+int currentLevel = 1;
 const int NB_LEVELS = 3;
 
 //briques
@@ -54,10 +54,10 @@ void loop() {
   
   getInputs();
   
-  if (launched == true) {
+  if (launched) {
     updateGame();
   }
-  if (launched == false) {
+  if (!launched) {
     ballX = padX + PAD_W / 2 - BALL_SIZE / 2;//tant que la balle n'est pas lancée, la déplacer en même temps que la palette, pour choisir l'endroit ou on lance.
   }
   displayGame();
