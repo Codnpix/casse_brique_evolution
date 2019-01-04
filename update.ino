@@ -2,177 +2,109 @@
 void updateGame() {
 
   bool touched = false;
+  bool pushed = false;
+  
+  int int_ballX = floor(ballX);
+  int int_ballY = floor(ballY);
+  int ballTop = int_ballY;
+  int ballBottom = int_ballY + BALL_SIZE;
+  int ballLeft = int_ballX;
+  int ballRight = int_ballX + BALL_SIZE;
 
   //collision balle/palette
-  if (ballX >= padX && ballX <= padX + PAD_W && ballY + BALL_RADIUS >= PAD_Y) {
-      if ((ballX >= padX && ballX <= padX + PAD_W && ballY + BALL_RADIUS >= gb.display.height() - PAD_H)) {
-
-      float dist_edgePad_left = ballX - padX;//distance balle/côté gauche pad
-      float dist_edgePad_right = (padX + PAD_W) - ballX;//distance ball/côté droit pad
-        
-        if (dist_edgePad_right > dist_edgePad_left) {//si la balle tape du côté gauche de la palette
-          speedX = max(-1 / dist_edgePad_left, -1);//speedX augmente si on se rapproche du bord(speeX max = -1)(la balle part vers la gauche)
-        }
-        else if (dist_edgePad_left > dist_edgePad_right) {//si elle tape du côté gauche
-          speedX = min(1 / dist_edgePad_right, 1);//speedX augmente si on se rapproche du bord(speeX max = 1)(ball part vers la droite)
-        } 
-        else {
-          speedX = 0;//si on tape au milieu, la balle rebondit verticalement.
-        }
-
-      speedY *= -1;
+  if (int_ballX + BALL_SIZE > padX
+  && int_ballX - BALL_SIZE < padX + PAD_W
+  && ballBottom > PAD_Y) {
+    float dist = (padX + PAD_W / 2) - (ballX + BALL_SIZE / 2);
+    if (dist != 0) {//éviter la division par 0
+      speedX = - 1 / dist;
+      if (abs(speedX) < MAX_SPEED_X) {
+        if (speedX < 0) speedX -= 0.50;
+        else if (speedX > 0) speedX += 0.50;
+      } else if (abs(speedX) >= MAX_SPEED_X) {
+        if (speedX < 0) speedX = -MAX_SPEED_X;
+        else if (speedX > 0) speedX = MAX_SPEED_X;
+      }
+    } else {
+      speedX = 0;
     }
+    speedY *= -1;
   }
-  if (ballY - BALL_RADIUS <= 0) {//collision plafond
+  
+  if (ballTop <= 0) {//collision plafond
     speedY *= -1;
   }
     
-  else if (ballX + BALL_RADIUS +1 >= gb.display.width() || ballX - BALL_RADIUS -1 <= 0) {//collision murs
+  if (ballRight >= gb.display.width() || ballLeft <= 0) {//collision murs
     if (speedX > 0) {
-      //speedX += ANGLE_CORRECTOR;
-      speedX *= -1;
+      if (fabs(speedX <= 0.35)) {
+        speedX += ANGLE_CORRECTOR;
+      }
     } else if (speedX < 0) {
-      //speedX -= ANGLE_CORRECTOR;
-      speedX *= -1;
+      if (fabs(speedX <= 0.35)) {
+        speedX -= ANGLE_CORRECTOR;
+      }
     } else {
-      speedX *= -1;
+      speedX = speedX;
     }
+    speedX *= -1;
   }
-  //perdu !
-  else if (ballY + BALL_RADIUS >= gb.display.height()) {
+  //perdu !(si on passe en dessous de la ligne sous la palette
+  if (ballY + BALL_SIZE > PAD_Y + PAD_H + 1) {
     initGame();
   }
 
   //collisions briques
   for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
     for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
-      
+
       int briqueLeft = briques[rangee][colonne].x;
       int briqueTop = briques[rangee][colonne].y;
-      //int briqueTop = briqueY;
       int briqueBottom = briques[rangee][colonne].y + BRICK_H;
-      //int briqueLeft = briqueX;
       int briqueRight = briques[rangee][colonne].x + BRICK_W;
-      int int_ballX = floor(ballX);
-      int int_ballY = floor(ballY);
-      int ballTop = int_ballY - BALL_RADIUS;
-      int ballBottom = int_ballY + (BALL_RADIUS * 2);
-      int ballLeft = int_ballX - BALL_RADIUS;
-      int ballRight = int_ballX + (BALL_RADIUS * 2);
-      
-      if(briques[rangee][colonne].state <= 0 && briques[rangee][colonne].state > -2 ) {
-        //si la brique a été détruite, ignorer la collision (sauf pour -2 car c'est l'état par défaut des briques métal);
-        continue;
-      }
-      
-      //pour les collision par le dessus ou le dessous des briques
-      //commencer par vérifier si la balle est en face de la brique verticalement
-      if ((int_ballX >= briqueLeft && int_ballX + BALL_RADIUS <= briqueRight)
-      && (ballTop <= briqueBottom && ballBottom >= briqueTop)) {//puis vérifier si il y a un chevauchement en y
-        if (!touched) {//pour que ça ne s'execute qu'une fois par collision
-          speedY *= -1;//faire rebondir la balle
-          gb.sound.playTick();
-          briques[rangee][colonne].state --;//abimer ou détruire la brique
-          touched = true;
-        }
-      }
-      
-      //si la balle tape pile entre deux briques verticalement
-      if (ballTop - 1 == briqueBottom 
-      && int_ballX + BALL_RADIUS >= briqueLeft - 1 
-      && int_ballX + BALL_RADIUS <= briqueLeft) {//la balle touche une brique en bas à gauche
-        if (!touched) {
-          gb.sound.playTick();
-          speedY = 1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-      }
-      if (ballTop - 1 == briqueBottom 
-      && int_ballX <= briqueRight + 1 
-      && int_ballX >= briqueRight) {//la balle touche une brique en bas à droite
-        if (!touched) {
-          gb.sound.playTick();
-          speedY = 1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-      }
-      if (ballBottom + 1 == briqueTop
-      && int_ballX + BALL_RADIUS >= briqueLeft - 1 
-      && int_ballX + BALL_RADIUS <= briqueLeft) {//la balle touche une brique en haut à gauche
-        if (!touched) {
-          gb.sound.playTick();
-          speedY = -1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-      }
-      if (ballBottom + 1 == briqueTop
-      && int_ballX >= briqueRight + 1 
-      && int_ballX <= briqueRight) {//la balle touche une brique en haut à gauche
-        if (!touched) {
-          gb.sound.playTick();
-          speedY = -1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-        
-      }
 
+      //si la brique a été détruite, ignorer la collision (sauf pour -2 car c'est l'état par défaut des briques métal);
+      if(briques[rangee][colonne].state <= 0 && briques[rangee][colonne].state > -2 ) continue;
       
-      //si la balle tape pile entre deux brique horizontalement
-      if (ballRight - 1 == briqueLeft 
-      && int_ballY + BALL_RADIUS >= briqueTop - 1 
-      && int_ballY + BALL_RADIUS <= briqueTop) {//la balle touche une brique à gauche en haut
+      if (touched) continue;
+
+      if (ballRight >= briqueLeft - 1
+      && ballLeft <= briqueRight + 1
+      && ballTop <= briqueBottom + 1
+      && ballBottom >= briqueTop - 1) {//si la balle entre en collision avec une des 4 côtéds de la brique
         if (!touched) {
-          gb.sound.playTick();
-          speedX = -1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-        
-      }
-      if (ballRight - 1 == briqueLeft 
-      && int_ballY <= briqueBottom + 1 
-      && int_ballY >= briqueBottom) {//la balle touche une brique à gauche en bas
-        if (!touched) {
-          gb.sound.playTick();
-          speedY = 1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-      }
-      if (ballLeft - 1 == briqueRight
-      && int_ballY + BALL_RADIUS >= briqueTop - 1 
-      && int_ballY + BALL_RADIUS <= briqueTop ) {//la balle touche une brique à droite en haut
-        if (!touched) {
-          gb.sound.playTick();
-          speedY = -1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-      }
-      if (ballLeft - 1 == briqueRight
-      && int_ballY <= briqueBottom + 1 
-      && int_ballY >= briqueBottom) {//la balle touche une brique à droite en bas
-        if (!touched) {
-          gb.sound.playTick();
-          speedY = -1;
-          briques[rangee][colonne].state --;
-          touched = true;
-        }
-      }
-      
-      //pour les collisions sur les côtés des briques
-      //vérifier si on est aligné horizontalement avec la brique
-      if ((ballTop <= briqueBottom && ballBottom >= briqueTop) 
-      && (ballRight >= briqueLeft && ballLeft <= briqueRight)) {//puis vérifier le chevauchement en x
-        if (!touched) {
-          if (abs(speedX) < 0.35) {
-            speedX *= -(1 + ANGLE_CORRECTOR);
-          } else {
-            speedX *= -1; //faire rebondir la balle
+          if (ballTop <= briqueBottom - 1
+          && ballBottom >= briqueTop + 1
+          && ballLeft <= briqueRight + 1
+          && ballRight >= briqueLeft - 1) {
+            if (abs(speedX) < 0.35) {
+              speedX *= -(1+ ANGLE_CORRECTOR);
+              if (!pushed) {
+                /*repousser la balle de 1 en cas de collision pour qu'elle sorte de la 
+                 * condition de collision et éviter de tomber dans une boucle infinie de 
+                 * changement de directions
+                 */
+                if (speedX > 0) ballX += 1.0;
+                else if (speedX < 0) ballX -= 1.0;
+                pushed = true;
+              }
+            }
+            else {
+              speedX *= -1;
+              if (!pushed) {
+                if (speedX > 0) ballX += 1.0;
+                else if (speedX < 0) ballX -= 1.0;
+                pushed = true;
+              }
+            }
+          }
+          else {
+            speedY *= -1;
+            if (!pushed) {
+              if (speedY > 0) ballY += 1.0;
+              else if (speedY < 0) ballY -= 1.0;
+              pushed = true;
+            }
           }
           gb.sound.playTick();
           briques[rangee][colonne].state --;//abimer ou détruire la brique
@@ -180,6 +112,12 @@ void updateGame() {
         }
       }
 
+      //changer l'image des brique dures quand elles ont pris un coup mais pas encore détruite
+      if (briques[rangee][colonne].type == 2 && briques[rangee][colonne].state == 1) {
+        briques[rangee][colonne].img = brick2_dmg;
+      }
+      
+      //jouer un son quand une brique est détruite
       if (briques[rangee][colonne].state <=0 && briques[rangee][colonne].state > -2) {
         gb.sound.playOK();
       }
@@ -197,12 +135,10 @@ void updateGame() {
         currentLevel ++;
         initGame();
       }
-      if (touched) {        
-        continue;
-      }
     }
   }
-  
+  speedX = calc_speedX(speedX);
+  //speedY = calc_speedY(speedY);
   ballX += speedX;
   ballY += speedY;
 }
@@ -226,3 +162,27 @@ void movePad(char dir[6]) {
     padX = padX;
   }
 }
+
+float calc_speedX(float speedX) {
+  float valX = fabs(speedX);
+  if (speedX > 0) {
+    if (valX >= MAX_SPEED_X) {
+      speedX = MAX_SPEED_X;
+    }
+  } else if (speedX < 0) {
+    if (valX >= MAX_SPEED_X) {
+      speedX = -MAX_SPEED_X;
+    }
+  }
+  return speedX;
+}
+
+/*float calc_speedY(float speedY) {
+  float valY = 1.5 - fabs(speedX);
+  if (speedY > 0) {
+    speedY = valY;
+  } else if (speedY < 0) {
+    speedY =  - valY;
+  }
+  return speedY;
+}*/

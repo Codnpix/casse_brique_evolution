@@ -32,15 +32,16 @@ int types_set[NB_RANGEES][NB_COLONNES] = {};
 //balle
 float ballX;
 float speedX;//declarés en float pour pouvoir calculer une variation d'angle
-int ballY;
-int speedY;
-const int BALL_RADIUS = 1; //la balle sera un cercle
-const float ANGLE_CORRECTOR = 0.40;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
+float ballY;
+float speedY;
+const int BALL_SIZE = 2; //la balle sera un cercle
+const float ANGLE_CORRECTOR = 0.0;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
+const float MAX_SPEED_X = 0.8;
 
 //palette
 const int PAD_W = 14;
 const int PAD_H = 2;
-const int PAD_Y = gb.display.height() - PAD_H;
+const int PAD_Y = gb.display.height() - PAD_H - 4;
 int padX;
 
 void setup() {
@@ -50,13 +51,14 @@ void setup() {
 
 void loop() {
   while(!gb.update());
+  
   getInputs();
   
   if (launched == true) {
     updateGame();
   }
   if (launched == false) {
-    ballX = padX + PAD_W / 2;//tant que la balle n'est pas lancée, la déplacer en même temps que la palette, pour choisir l'endroit ou on lance.
+    ballX = padX + PAD_W / 2 - BALL_SIZE / 2;//tant que la balle n'est pas lancée, la déplacer en même temps que la palette, pour choisir l'endroit ou on lance.
   }
   displayGame();
 }
