@@ -2,7 +2,7 @@
 
 bool launched;
 
-int currentLevel = 1;
+int currentLevel = 3;
 const int NB_LEVELS = 3;
 
 //briques
@@ -36,7 +36,7 @@ float ballY;
 float speedY;
 const int BALL_SIZE = 2; //la balle sera un cercle
 const float ANGLE_CORRECTOR = 0.0;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
-const float MAX_SPEED_X = 0.8;
+const float MAX_SPEED_X = 0.7;
 
 //palette
 const int PAD_W = 14;
