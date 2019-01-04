@@ -14,16 +14,10 @@ void updateGame() {
   if (int_ballX + BALL_SIZE > padX
   && int_ballX - BALL_SIZE < padX + PAD_W
   && ballBottom > PAD_Y) {
-    float dist = (padX + PAD_W / 2) - (ballX + BALL_SIZE / 2);//calculer la position de la balle par rapport au centre de la palette
+    float dist = (ballX + BALL_SIZE / 2) - (padX + PAD_W / 2);//calculer la position de la balle par rapport au centre de la palette
+    float inv_speedX;
     if (dist != 0) {//éviter la division par 0
-      speedX = - 1 / dist;//calculer le sens de l'angle du rebond en fonction de la position de la balle
-      if (abs(speedX) < MAX_SPEED_X) {
-        if (speedX < 0) speedX -= 0.40;//calculer la valeur de l'angle en ajoutant une valeur entre 0 et 1 à speedX (plus l'amplitude de visée sera grande)
-        else if (speedX > 0) speedX += 0.40;//faire le calcul en negatif ou en positif selon le signe de speedX
-      } else if (abs(speedX) >= MAX_SPEED_X) {
-        if (speedX < 0) speedX = -MAX_SPEED_X;
-        else if (speedX > 0) speedX = MAX_SPEED_X;
-      }
+      speedX = 1 / (1/ dist);//calculer le sens et la valeur de l'angle du rebond en fonction de la position de la balle
     } else {
       speedX = 0;
     }
@@ -60,6 +54,13 @@ void updateGame() {
     delay(150);
     gb.sound.tone(140,800);
     gb.sound.tone(205,800);
+    delay(800);
+    
+    gb.display.clear();
+    gb.display.fontSize = 2;
+    gb.display.setCursor(14, gb.display.height() / 2);
+    gb.display.print("LEVEL ");
+    gb.display.print(currentLevel);
     delay(800);
     
     initGame();
@@ -131,12 +132,6 @@ void updateGame() {
       if (zeroBriques) {
         currentLevel ++;
         gb.display.clear();
-        
-        /*gb.display.fontSize = 2;
-        gb.display.setCursor(14, gb.display.height() / 2);
-        gb.display.print("LEVEL ");
-        gb.display.print(currentLevel);*/
-        
         gb.display.fontSize = 2;
         gb.display.setCursor(10,gb.display.height() / 2);
         gb.display.print("You win");
@@ -150,6 +145,12 @@ void updateGame() {
         gb.sound.tone(360,600);
         gb.sound.tone(600,600);
         delay(620);
+
+        gb.display.clear();
+        gb.display.fontSize = 2;
+        gb.display.setCursor(14, gb.display.height() / 2);
+        gb.display.print("LEVEL ");
+        gb.display.print(currentLevel);
         initGame();
       }
     }

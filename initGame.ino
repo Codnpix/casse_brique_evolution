@@ -57,18 +57,10 @@ void initGame() {
   if (currentLevel > NB_LEVELS) {//si le niveau à charger n'existe pas (encore), on charge le 1er niveau
     currentLevel = 1;
   }
-  gb.display.clear();
-  gb.display.fontSize = 2;
-  gb.display.setCursor(14, gb.display.height() / 2);
-  gb.display.print("LEVEL ");
-  gb.display.print(currentLevel);
-  delay(800);
-
-  loadLevel(currentLevel - 1);//- 1 car l'index du tableau de niveau commence à 0 et currentLevel commence à compter à 1.
-  
   //balle pas encore lancée
   launched = false;
-  
+  loadLevel(currentLevel - 1);//- 1 car l'index du tableau de niveau commence à 0 et currentLevel commence à compter à 1.
+
   //reset position palette
   padX = gb.display.width() / 2 - PAD_W / 2;
   
