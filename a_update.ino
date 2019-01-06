@@ -44,26 +44,7 @@ void updateGame() {
   }
   //perdu !(si on passe en dessous de la ligne sous la palette
   if (ballY + BALL_SIZE > PAD_Y + PAD_H + 1) {
-    gb.display.clear();
-    gb.display.fontSize = 2;
-    gb.display.setCursor(8,gb.display.height() / 2);
-    gb.display.print("You lose");
-        
-    gb.sound.tone(150,150);
-    gb.sound.tone(215,150);
-    delay(150);
-    gb.sound.tone(140,800);
-    gb.sound.tone(205,800);
-    delay(800);
-    
-    gb.display.clear();
-    gb.display.fontSize = 2;
-    gb.display.setCursor(14, gb.display.height() / 2);
-    gb.display.print("LEVEL ");
-    gb.display.print(currentLevel);
-    delay(800);
-    
-    initGame();
+    lose = true;
   }
 
   //collisions briques
@@ -114,10 +95,34 @@ void updateGame() {
       if (briques[rangee][colonne].type == 2 && briques[rangee][colonne].state == 1) {
         briques[rangee][colonne].img = brick2_dmg;
       }
+      if (briques[rangee][colonne].type == 5 && briques[rangee][colonne].state == 2) {
+        briques[rangee][colonne].img = brick5_dmg;
+      }
+      if (briques[rangee][colonne].type == 5 && briques[rangee][colonne].state == 1) {
+        briques[rangee][colonne].img = brick5_dmg2;
+      }
+      if (briques[rangee][colonne].type == 4 && briques[rangee][colonne].state == 1) {
+        briques[rangee][colonne].img = brick4_dmg;
+      }
       
       //jouer un son quand une brique est détruite
       if (briques[rangee][colonne].state <=0 && briques[rangee][colonne].state > -2) {
         gb.sound.playOK();
+      }
+
+      //briques défilantes (types 4 et 5)
+      if (briques[rangee][colonne].type == 4 || briques[rangee][colonne].type == 5) {
+        briques[rangee][colonne].x += 1;
+        if (briques[rangee][colonne].x >= gb.display.width()) {
+          briques[rangee][colonne].x = 0 - BRICK_W;
+        }
+      }
+      //brique défilantes en cercle (types 6 et 7)
+      if (briques[rangee][colonne].type == 6 || briques[rangee][colonne].type == 7) {
+          if (angle >= 360) angle = 0;
+          angle += 1;
+          briques[rangee][colonne].x = int(cos(angle * PI/180) * radius) + (colonne * BRICK_W + 1) + 1;
+          briques[rangee][colonne].y = int(sin(angle * PI/180) * radius) + (rangee * BRICK_H + 1) + 1;
       }
       
       bool zeroBriques = true;
@@ -130,33 +135,13 @@ void updateGame() {
         }
       }
       if (zeroBriques) {
-        currentLevel ++;
-        gb.display.clear();
-        gb.display.fontSize = 2;
-        gb.display.setCursor(10,gb.display.height() / 2);
-        gb.display.print("You win");
-        
-        gb.sound.tone(300,100);
-        gb.sound.tone(230,100);
-        delay(120);
-        gb.sound.tone(340,100);
-        gb.sound.tone(400,100);
-        delay(120);
-        gb.sound.tone(360,600);
-        gb.sound.tone(600,600);
-        delay(620);
-
-        gb.display.clear();
-        gb.display.fontSize = 2;
-        gb.display.setCursor(14, gb.display.height() / 2);
-        gb.display.print("LEVEL ");
-        gb.display.print(currentLevel);
-        initGame();
+        //currentLevel ++;
+        win = true;
       }
     }
   }
   speedX = calc_speedX(speedX);//recalculer speedX pour qu'il ne dépasse jamais sa vitesse max
-  //speedY = calc_speedY(speedY);//pour calculer Y en fonction de X et garder une valeur constante sur tous les vecteurs (rendu très moche)
+  
   ballX += speedX;
   ballY += speedY;
 }
@@ -194,13 +179,3 @@ float calc_speedX(float speedX) {
   }
   return speedX;
 }
-
-/*float calc_speedY(float speedY) {
-  float valY = 1.5 - fabs(speedX);
-  if (speedY > 0) {
-    speedY = valY;
-  } else if (speedY < 0) {
-    speedY =  - valY;
-  }
-  return speedY;
-}*/
