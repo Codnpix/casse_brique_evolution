@@ -1,6 +1,6 @@
 //UPDATE
 void updateGame() {
-
+  
   bool touched = false;
   
   int int_ballX = floor(ballX);
@@ -116,19 +116,7 @@ void updateGame() {
           briques[rangee][colonne].x = 0 - BRICK_W;
         }
       }
-      //brique défilantes en cercle (types 6 et 7)
-      if (briques[rangee][colonne].type == 6 || briques[rangee][colonne].type == 7) {
-        //à travailler
-        float rayonX = (3 * (BRICK_W + 2)) / 2;
-        float rayonY = (5 * (BRICK_H + 2)) / 2;
-        freq++;
-        if (freq % 10 == 0) angleIndex ++;
-        if (angleIndex > 20) angleIndex = 0;
-        
-        briques[rangee][colonne].x = colonne * (BRICK_W + 1) + 1 + int(cos(angles[angleIndex] * 180 / PI) * rayonX);
-        briques[rangee][colonne].y = rangee * (BRICK_H + 1) + 1 + int(sin(angles[angleIndex] * 180 / PI) * rayonY);
-      }
-      
+
       bool zeroBriques = true;
       //verifier s'il reste des briques (sauf metal)
       for (int x = 0; x < NB_RANGEES; x++) {
