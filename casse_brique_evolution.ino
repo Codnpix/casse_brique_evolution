@@ -5,8 +5,8 @@ bool win;
 bool lose;
 bool levelNameScreen;
 
-int currentLevel = 5;
-const int NB_LEVELS = 5;
+int currentLevel = 1;
+const int NB_LEVELS = 4;
 
 //briques
 const int BRICK_H = 4;//hauteur d'une brique
