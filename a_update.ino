@@ -15,7 +15,6 @@ void updateGame() {
   && int_ballX - BALL_SIZE < padX + PAD_W
   && ballBottom > PAD_Y) {
     float dist = (ballX + BALL_SIZE / 2) - (padX + PAD_W / 2);//calculer la position de la balle par rapport au centre de la palette
-    float inv_speedX;
     if (dist != 0) {//éviter la division par 0
       speedX = 1 / (1/ dist);//calculer le sens et la valeur de l'angle du rebond en fonction de la position de la balle
     } else {
@@ -119,7 +118,15 @@ void updateGame() {
       }
       //brique défilantes en cercle (types 6 et 7)
       if (briques[rangee][colonne].type == 6 || briques[rangee][colonne].type == 7) {
-        //
+        //à travailler
+        float rayonX = (3 * (BRICK_W + 2)) / 2;
+        float rayonY = (5 * (BRICK_H + 2)) / 2;
+        freq++;
+        if (freq % 10 == 0) angleIndex ++;
+        if (angleIndex > 20) angleIndex = 0;
+        
+        briques[rangee][colonne].x = colonne * (BRICK_W + 1) + 1 + int(cos(angles[angleIndex] * 180 / PI) * rayonX);
+        briques[rangee][colonne].y = rangee * (BRICK_H + 1) + 1 + int(sin(angles[angleIndex] * 180 / PI) * rayonY);
       }
       
       bool zeroBriques = true;
@@ -132,7 +139,6 @@ void updateGame() {
         }
       }
       if (zeroBriques) {
-        //currentLevel ++;
         win = true;
       }
     }
