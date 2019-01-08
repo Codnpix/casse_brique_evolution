@@ -23,6 +23,11 @@ typedef struct Brique {
   int type;
   int state;
   Image img;
+  //pour les briques tournantes (initialisé en fonctions des points choisis dans le niveau concerné)
+  float angle;
+  float circleRadius;
+  int initX;
+  int initY;
 };
 
 //déclaration du tableau de briques
@@ -96,17 +101,22 @@ const int levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
   {
     {0,0,0,0,0,0,0,0},
     {0,0,0,6,0,0,0,0},
+    {0,0,6,0,6,0,0,0},
     {0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0},
+    {0,0,6,0,6,0,0,0},
     {0,0,0,6,0,0,0,0},
     {0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0}
   }
 };
-int angleIndex = 0;
+//constantes level 5 :
+//centre cercle
+int circleCenterX = 3*(BRICK_W +2);
+int circleCenterY = 3*(BRICK_H +2);
+
+
 int freq=0;
-const int angles[20] = {0,18,36,54,72,90,108,126,144,162,180,198,216,234,252,270,288,306,324,342};
+
 
 
 //background image level1
