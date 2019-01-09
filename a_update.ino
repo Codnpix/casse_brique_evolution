@@ -55,8 +55,8 @@ void updateGame() {
       int briqueBottom = briques[rangee][colonne].y + BRICK_H;
       int briqueRight = briques[rangee][colonne].x + BRICK_W;
 
-      //si la brique a été détruite, ignorer la collision (sauf pour -2 car c'est l'état par défaut des briques métal);
-      if(briques[rangee][colonne].state <= 0 && briques[rangee][colonne].state > -2 ) continue;
+      //si la brique a été détruite, ignorer la collision (sauf pour les briques métal (type3);
+      if(briques[rangee][colonne].state <= 0 && briques[rangee][colonne].type != 3 ) continue;
 
       if (ballRight >= briqueLeft
       && ballLeft <= briqueRight
@@ -105,7 +105,7 @@ void updateGame() {
       }
       
       //jouer un son quand une brique est détruite
-      if (briques[rangee][colonne].state <=0 && briques[rangee][colonne].state > -2) {
+      if (briques[rangee][colonne].state <=0 && briques[rangee][colonne].type != 3) {
         gb.sound.playOK();
       }
 
@@ -117,24 +117,25 @@ void updateGame() {
         }
       }
       
-      //brique défilantes en cercle (types 6 et 7)
-      br6_ampX ++;
-      br7_ampY ++;
+      //briques oscillantes (types 6 et 7)
+      //6 : mvt horizontal
       if (briques[rangee][colonne].type == 6) {
-        briques[rangee][colonne].x += br6_speedX;
-      }
-      if (br6_ampX >= BRICK_W + 2) {
-          br6_ampX = 0;
-          br6_speedX *= -1;
+        briques[rangee][colonne].x += briques[rangee][colonne].speedX;
+        if (briques[rangee][colonne].x >= (colonne + edgesXY[currentLevel-1][0]) * (BRICK_W + 1) + 1) {
+          briques[rangee][colonne].speedX = edgesXY[currentLevel-1][4];
+        } else if (briques[rangee][colonne].x <= (colonne + edgesXY[currentLevel-1][2]) * (BRICK_W + 1) + 1) {
+          briques[rangee][colonne].speedX = edgesXY[currentLevel-1][6];
         }
-      
+      }
+      //7 : mvt vertical
       if (briques[rangee][colonne].type == 7) {
-        briques[rangee][colonne].y += br7_speedY;
-      }
-      if (br7_ampY >= (BRICK_H)* 2) {
-          br7_ampY = 0;
-          br7_speedY *= -1;
+        briques[rangee][colonne].y += briques[rangee][colonne].speedY;
+        if (briques[rangee][colonne].y <= (rangee + edgesXY[currentLevel-1][1]) * (BRICK_H + 1) + 1) {
+          briques[rangee][colonne].speedY = edgesXY[currentLevel-1][5];
+        } else if (briques[rangee][colonne].y >= (rangee + edgesXY[currentLevel-1][3]) * (BRICK_H + 1) + 1) {
+          briques[rangee][colonne].speedY = edgesXY[currentLevel-1][7];
         }
+      }
       
       bool zeroBriques = true;
       //verifier s'il reste des briques (sauf metal)
