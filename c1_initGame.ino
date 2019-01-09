@@ -44,7 +44,7 @@ void initGame() {
         briques[rangee][colonne].img = brick2;
       } else if (briques[rangee][colonne].type == 3) {
         //type 3 indestructible (brique détruite et collision ignorée quand state <= 0, mais >-2)
-        briques[rangee][colonne].state = -2; 
+        briques[rangee][colonne].state = -2;
         briques[rangee][colonne].img = brick3;
       } else if (briques[rangee][colonne].type == 4) {
         briques[rangee][colonne].state = 2; 
@@ -55,9 +55,11 @@ void initGame() {
       } else if (briques[rangee][colonne].type == 6) {
           briques[rangee][colonne].state = 1; 
           briques[rangee][colonne].img = brick6;
+          briques[rangee][colonne].speedX = edgesXY[currentLevel-1][4];
       } else if (briques[rangee][colonne].type == 7) {
           briques[rangee][colonne].state = 1; 
           briques[rangee][colonne].img = brick7;
+          briques[rangee][colonne].speedY = edgesXY[currentLevel-1][5];
       }
     }
   }
