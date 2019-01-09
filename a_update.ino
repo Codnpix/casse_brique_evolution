@@ -109,24 +109,20 @@ void updateGame() {
         gb.sound.playOK();
       }
 
-      //briques défilantes (types 4 et 5)
+      //briques défilantes vers la droite(types 4 et 5)
       if (briques[rangee][colonne].type == 4 || briques[rangee][colonne].type == 5) {
         briques[rangee][colonne].x += 1;
         if (briques[rangee][colonne].x >= gb.display.width()) {
-          briques[rangee][colonne].x = 0 - BRICK_W;
+          briques[rangee][colonne].x = - BRICK_W;
         }
       }
-      //brique défilantes en cercle (types 6 et 7)
-      if (briques[rangee][colonne].type == 6 || briques[rangee][colonne].type == 7) {
-        
-          briques[rangee][colonne].angle ++;
-          if (briques[rangee][colonne].angle >= 360) {//revenir à 0 quand l'angle à faire un tour de cercle complet
-            briques[rangee][colonne].angle = 0;
-          }
-          briques[rangee][colonne].x = briques[rangee][colonne].initX + int(cos(briques[rangee][colonne].angle * PI / 180) * briques[rangee][colonne].circleRadius);
-          briques[rangee][colonne].y = briques[rangee][colonne].initY + int(sin(briques[rangee][colonne].angle * PI / 180) * briques[rangee][colonne].circleRadius);
+      //brique défilante droite et gauche alternée
+      if (briques[rangee][colonne].type == 6) {
 
-  
+      }
+      //briques défilante haut bas alterné
+      if (briques[rangee][colonne].type == 7) {
+
       }
       
       bool zeroBriques = true;
@@ -143,6 +139,7 @@ void updateGame() {
       }
     }
   }
+  
   speedX = calc_speedX(speedX);//recalculer speedX pour qu'il ne dépasse jamais sa vitesse max
   
   ballX += speedX;
