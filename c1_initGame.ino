@@ -54,7 +54,7 @@ void initGame() {
           briques[rangee][colonne].img = brick5;
       } else if (briques[rangee][colonne].type == 6) {
           briques[rangee][colonne].state = 1; 
-          briques[rangee][colonne].img = brick6;  
+          briques[rangee][colonne].img = brick6;
       } else if (briques[rangee][colonne].type == 7) {
           briques[rangee][colonne].state = 1; 
           briques[rangee][colonne].img = brick7;

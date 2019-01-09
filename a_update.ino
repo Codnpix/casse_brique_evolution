@@ -120,13 +120,20 @@ void updateGame() {
       //brique défilantes en cercle (types 6 et 7)
       if (briques[rangee][colonne].type == 6) {
         briques[rangee][colonne].x += br6_speedX;
-        br6_ampX ++;
+        //br6_ampX ++;
         if (br6_ampX >= 96) {
           br6_ampX = 0;
           br6_speedX *= -1;
         }
       }
+      
       if (briques[rangee][colonne].type == 7) {
+        briques[rangee][colonne].y += br7_speedY;
+        //br7_ampY ++;
+        if (br7_ampY >= 64) {
+          br7_ampY = 0;
+          br7_speedY *= -1;
+        }
       }
       
       bool zeroBriques = true;
