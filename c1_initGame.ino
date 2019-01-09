@@ -53,29 +53,11 @@ void initGame() {
           briques[rangee][colonne].state = 3; 
           briques[rangee][colonne].img = brick5;
       } else if (briques[rangee][colonne].type == 6) {
-        
           briques[rangee][colonne].state = 1; 
-          briques[rangee][colonne].img = brick6;
-          
-          briques[rangee][colonne].circleRadius = 
-          sqrt( (briques[rangee][colonne].x - circleCenterX)*(briques[rangee][colonne].x - circleCenterX) 
-          + (briques[rangee][colonne].y - circleCenterY)*(briques[rangee][colonne].y - circleCenterY) );
-          float cosAngle = (briques[rangee][colonne].x - circleCenterX) / briques[rangee][colonne].circleRadius;
-          briques[rangee][colonne].angle = int((acos(cosAngle) * 180) / PI);
-          briques[rangee][colonne].initX = briques[rangee][colonne].x;
-          briques[rangee][colonne].initY = briques[rangee][colonne].y;
-          
+          briques[rangee][colonne].img = brick6;  
       } else if (briques[rangee][colonne].type == 7) {
-        
           briques[rangee][colonne].state = 1; 
           briques[rangee][colonne].img = brick7;
-          
-
-          briques[rangee][colonne].circleRadius = 
-          sqrt( (briques[rangee][colonne].x - circleCenterX)*(briques[rangee][colonne].x - circleCenterX) 
-          + (briques[rangee][colonne].y - circleCenterY)*(briques[rangee][colonne].y - circleCenterY) );
-          float cosAngle = (briques[rangee][colonne].x - circleCenterX) / briques[rangee][colonne].circleRadius;
-          briques[rangee][colonne].angle = (acos(cosAngle) * 180) / PI;
       }
     }
   }

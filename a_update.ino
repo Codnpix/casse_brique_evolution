@@ -119,6 +119,12 @@ void updateGame() {
       
       //brique défilantes en cercle (types 6 et 7)
       if (briques[rangee][colonne].type == 6) {
+        briques[rangee][colonne].x += br6_speedX;
+        br6_ampX ++;
+        if (br6_ampX >= BRICK_W +2) {
+          br6_ampX = 0;
+          br6_speedX *= -1;
+        }
       }
       if (briques[rangee][colonne].type == 7) {
       }
