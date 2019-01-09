@@ -116,8 +116,11 @@ void updateGame() {
           briques[rangee][colonne].x = 0 - BRICK_W;
         }
       }
+      
       //brique défilantes en cercle (types 6 et 7)
-      if (briques[rangee][colonne].type == 6 || briques[rangee][colonne].type == 7) {
+      if (briques[rangee][colonne].type == 6) {
+      }
+      if (briques[rangee][colonne].type == 7) {
       }
       
       bool zeroBriques = true;
