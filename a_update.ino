@@ -116,14 +116,25 @@ void updateGame() {
           briques[rangee][colonne].x = - BRICK_W;
         }
       }
-      //brique défilante droite et gauche alternée
+      
+      //brique défilantes en cercle (types 6 et 7)
+      br6_ampX ++;
+      br7_ampY ++;
       if (briques[rangee][colonne].type == 6) {
-
+        briques[rangee][colonne].x += br6_speedX;
       }
-      //briques défilante haut bas alterné
+      if (br6_ampX >= BRICK_W + 2) {
+          br6_ampX = 0;
+          br6_speedX *= -1;
+        }
+      
       if (briques[rangee][colonne].type == 7) {
-
+        briques[rangee][colonne].y += br7_speedY;
       }
+      if (br7_ampY >= (BRICK_H)* 2) {
+          br7_ampY = 0;
+          br7_speedY *= -1;
+        }
       
       bool zeroBriques = true;
       //verifier s'il reste des briques (sauf metal)
