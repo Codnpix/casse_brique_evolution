@@ -118,15 +118,6 @@ void updateGame() {
       }
       //brique défilantes en cercle (types 6 et 7)
       if (briques[rangee][colonne].type == 6 || briques[rangee][colonne].type == 7) {
-        
-          briques[rangee][colonne].angle ++;
-          if (briques[rangee][colonne].angle >= 360) {//revenir à 0 quand l'angle à faire un tour de cercle complet
-            briques[rangee][colonne].angle = 0;
-          }
-          briques[rangee][colonne].x = briques[rangee][colonne].initX + int(cos(briques[rangee][colonne].angle * PI / 180) * briques[rangee][colonne].circleRadius);
-          briques[rangee][colonne].y = briques[rangee][colonne].initY + int(sin(briques[rangee][colonne].angle * PI / 180) * briques[rangee][colonne].circleRadius);
-
-  
       }
       
       bool zeroBriques = true;
