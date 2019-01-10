@@ -19,6 +19,7 @@ void initGame() {
   }
   //balle pas encore lancée
   launched = false;
+  
   loadLevel(currentLevel - 1);//- 1 car l'index du tableau de niveau commence à 0 et currentLevel commence à compter à 1.
 
   //reset position palette
