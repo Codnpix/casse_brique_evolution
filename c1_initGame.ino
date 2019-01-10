@@ -53,11 +53,11 @@ void initGame() {
           briques[rangee][colonne].state = 3; 
           briques[rangee][colonne].img = brick5;
       } else if (briques[rangee][colonne].type == 6) {
-          briques[rangee][colonne].state = 1; 
+          briques[rangee][colonne].state = 2; 
           briques[rangee][colonne].img = brick6;
           briques[rangee][colonne].speedX = edgesXY[currentLevel-1][4];
       } else if (briques[rangee][colonne].type == 7) {
-          briques[rangee][colonne].state = 1; 
+          briques[rangee][colonne].state = 2; 
           briques[rangee][colonne].img = brick7;
           briques[rangee][colonne].speedY = edgesXY[currentLevel-1][5];
       } else if (briques[rangee][colonne].type == 8) {
@@ -65,6 +65,21 @@ void initGame() {
           briques[rangee][colonne].img = brick8;
           briques[rangee][colonne].speedY = seqLvl6[0][1];
           briques[rangee][colonne].speedX = seqLvl6[0][0];
+      } else if (briques[rangee][colonne].type == 9) {
+          briques[rangee][colonne].state = 2; 
+          briques[rangee][colonne].img = brick9;
+          briques[rangee][colonne].speedY = seqLvl6[0][1];
+          briques[rangee][colonne].speedX = seqLvl6[0][0];
+      } else if (briques[rangee][colonne].type == 10) {
+          briques[rangee][colonne].state = 1; 
+          briques[rangee][colonne].img = brick10;
+          briques[rangee][colonne].speedY = seqLvl6inv[0][1];
+          briques[rangee][colonne].speedX = seqLvl6inv[0][0];
+      } else if (briques[rangee][colonne].type == 11) {
+          briques[rangee][colonne].state = 2; 
+          briques[rangee][colonne].img = brick11;
+          briques[rangee][colonne].speedY = seqLvl6inv[0][1];
+          briques[rangee][colonne].speedX = seqLvl6inv[0][0];
       }
     }
   }

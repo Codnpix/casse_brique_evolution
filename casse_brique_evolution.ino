@@ -25,6 +25,7 @@ struct Brique {
   Image img;
   int speedX;
   int speedY;
+  unsigned long deathTime;
 };
 
 //déclaration du tableau de briques
@@ -39,8 +40,8 @@ float ballX;
 float speedX;//declarés en float pour pouvoir calculer une variation d'angle
 float ballY;
 float speedY;
-const int BALL_SIZE = 2; //la balle sera un cercle
-const float ANGLE_CORRECTOR = 0.0;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
+const int BALL_SIZE = 2;//balle carrée 2 px coté
+const float ANGLE_CORRECTOR = 0.25;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
 const float MAX_SPEED_X = 0.7;
 
 //palette
@@ -106,14 +107,14 @@ const int levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
     {3,0,3,0,3,0,3,0}
   },
   {
-    {0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0},
-    {0,0,0,2,2,0,0,0},
-    {0,0,0,0,0,8,8,8},
-    {0,0,0,0,0,8,8,8},
-    {0,0,0,0,0,8,8,8}
+    {11,10,0,0,0,0,0,0},
+    {10,11,0,0,0,0,0,0},
+    {0,0,1,1,1,1,0,0},
+    {0,0,1,3,3,1,0,0},
+    {0,0,1,3,3,1,0,0},
+    {0,0,1,1,1,1,0,0},
+    {0,0,0,0,0,0,9,8},
+    {0,0,0,0,0,0,8,9}
   }
 };
 //facteur de largeurs de colonnes et de rangées pour les mouvements du level5;
@@ -123,15 +124,22 @@ int edgesXY[NB_LEVELS][8] = {
   {0,0,0,0,0,0,0,0},
   {0,0,0,0,0,0,0,0},
   {0,0,-1,1,-1,1,1,-1},
-  {0,0,3,4,0,0,0,0}
+  {0,0,-6,-6,0,0,0,0}
   };//rangées : niveaux; colonnes : {départX, départY, arrivéeX, arrivéeY, speedXdépart, speedYdépart, speedXArrivée, speedYArrivée}
   //autre essai implémentation mouvement brique- essai pour level6 brique type8 :
-  int seqLvl6[4][2] = {
+int seqLvl6[4][2] = {
     {0,-1},
     {-1,0},
     {0,1},
     {1,0}
-    };//rangée : cran de la sequence - colonne: speedX, speedY
+  };//rangée : cran de la sequence - colonne: speedX, speedY
+int seqLvl6inv[4][2] = {
+  {0,1},
+  {1,0},
+  {0,-1},
+  {-1,0}
+};
+const int RESPAWN_INTERVAL = 20000; 
   
 
 //background image level1
@@ -162,23 +170,3 @@ Image bg_6 = Image(bg_6Data);
 const Image backgrounds[NB_LEVELS] = {
   bg_1, bg_2, bg_3, bg_4, bg_5, bg_6
 };
-
-void setup() {
-  gb.begin();
-  initGame();
-}
-
-void loop() {
-  
-  while(!gb.update());
-  
-  getInputs();
-  
-  if (launched) {
-    updateGame();
-  }
-  if (!launched) {//tant que la balle n'est pas lancée, la déplacer en même temps que la palette, pour choisir l'endroit ou on lance.
-    ballX = padX + PAD_W / 2 - BALL_SIZE / 2;
-  }
-  displayGame();
-}

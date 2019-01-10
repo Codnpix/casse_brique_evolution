@@ -1,5 +1,4 @@
 //DISPLAY
-
 void drawBackground(int index) {
   //gb.display.drawImage(0,0, bg_1, gb.display.width(), gb.display.height());
   gb.display.drawImage(0,0, backgrounds[index - 1], gb.display.width(), gb.display.height());
