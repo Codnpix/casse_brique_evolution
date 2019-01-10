@@ -136,6 +136,32 @@ void updateGame() {
           briques[rangee][colonne].speedY = edgesXY[currentLevel-1][7];
         }
       }
+      //brique8 mouvement en rectangle
+      if (briques[rangee][colonne].type == 8) {
+        briques[rangee][colonne].y += briques[rangee][colonne].speedY;
+        briques[rangee][colonne].x += briques[rangee][colonne].speedX;
+
+        if ((briques[rangee][colonne].x >= (colonne + edgesXY[currentLevel-1][0]) * (BRICK_W + 1) + 1)
+        && (briques[rangee][colonne].y >= (rangee + edgesXY[currentLevel-1][1]) * (BRICK_H + 1) + 1)){
+          briques[rangee][colonne].speedX = seqLvl6[0][0];
+          briques[rangee][colonne].speedY = seqLvl6[0][1];
+        } 
+        else if ((briques[rangee][colonne].x >= (colonne + edgesXY[currentLevel-1][0]) * (BRICK_W + 1) + 1)
+        && (briques[rangee][colonne].y <= (rangee + edgesXY[currentLevel-1][3]) * (BRICK_H + 1) + 1)){
+          briques[rangee][colonne].speedX = seqLvl6[1][0];
+          briques[rangee][colonne].speedY = seqLvl6[1][1];
+        }
+        else if ((briques[rangee][colonne].x <= (colonne + edgesXY[currentLevel-1][2]) * (BRICK_W + 1) + 1)
+        && (briques[rangee][colonne].y <= (rangee + edgesXY[currentLevel-1][3]) * (BRICK_H + 1) + 1)){
+          briques[rangee][colonne].speedX = seqLvl6[2][0];
+          briques[rangee][colonne].speedY = seqLvl6[2][1];
+        } 
+        else if ((briques[rangee][colonne].x <= (colonne + edgesXY[currentLevel-1][2]) * (BRICK_W + 1) + 1)
+        && (briques[rangee][colonne].y >= (rangee + edgesXY[currentLevel-1][1]) * (BRICK_H + 1) + 1)){
+          briques[rangee][colonne].speedX = seqLvl6[3][0];
+          briques[rangee][colonne].speedY = seqLvl6[3][1];
+        }
+      }
       
       bool zeroBriques = true;
       //verifier s'il reste des briques (sauf metal)

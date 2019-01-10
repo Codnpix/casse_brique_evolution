@@ -60,6 +60,11 @@ void initGame() {
           briques[rangee][colonne].state = 1; 
           briques[rangee][colonne].img = brick7;
           briques[rangee][colonne].speedY = edgesXY[currentLevel-1][5];
+      } else if (briques[rangee][colonne].type == 8) {
+          briques[rangee][colonne].state = 1; 
+          briques[rangee][colonne].img = brick8;
+          briques[rangee][colonne].speedY = seqLvl6[0][1];
+          briques[rangee][colonne].speedX = seqLvl6[0][0];
       }
     }
   }
