@@ -59,7 +59,7 @@ void displayGame() {
           continue;
         } else {
           gb.display.drawImage(briques[rangee][colonne].x, briques[rangee][colonne].y, briques[rangee][colonne].img, BRICK_W, BRICK_H);
-        }    
+        }
       }
     }
   }
