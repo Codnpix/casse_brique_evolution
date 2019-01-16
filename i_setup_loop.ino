@@ -1,12 +1,12 @@
 void setup() {
   gb.begin();
-  initGame();
+  displayMenu();
 }
 
 void loop() {
   
   while(!gb.update());
-  
+
   getInputs();
   
   if (launched) {

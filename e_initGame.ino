@@ -1,9 +1,13 @@
-//charger le niveau
-void loadLevel(int myLevel) {
-   // inutile de parcourir la première des 3 dimensions du tableau, 
-   // la valeur de l'index qu'on cherche est donnée par currentLevel passé en paramètre
-   // et il ne faut pas charger tous les niveaux à chaque fois.
+/*void clearLevel() {
+  for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
+      for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
+        types_set[rangee][colonne] = 0;
+      }
+    }
+}*/
 
+void loadLevel(int myLevel) {
+   
   for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
       for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
         types_set[rangee][colonne] = levels[myLevel][rangee][colonne];
@@ -11,16 +15,17 @@ void loadLevel(int myLevel) {
     }
 }
 
-//initialisation du jeu (au lancement, ou a chaque fois qu'on perd)
+
 void initGame() {
-  levelNameScreen = true;
-  if (currentLevel > NB_LEVELS) {//si le niveau à charger n'existe pas (encore), on charge le 1er niveau
+  if (!gameOn) levelNameScreen = true;
+  
+  if (currentLevel > NB_LEVELS) {
     currentLevel = 1;
   }
+  
   //balle pas encore lancée
   launched = false;
-  
-  loadLevel(currentLevel - 1);//- 1 car l'index du tableau de niveau commence à 0 et currentLevel commence à compter à 1.
+  loadLevel(currentLevel - 1);
 
   //reset position palette
   padX = gb.display.width() / 2 - PAD_W / 2;
@@ -34,17 +39,16 @@ void initGame() {
   //initialiser les briques
   for (int rangee = 0; rangee < NB_RANGEES; rangee ++) {
     for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
-      briques[rangee][colonne].type = types_set[rangee][colonne];//type de la brique
-      briques[rangee][colonne].x = colonne * (BRICK_W + 1) + 1;//position x
-      briques[rangee][colonne].y = rangee * (BRICK_H + 1) + 1;//position y
-      if (briques[rangee][colonne].type == 1) {//état et image selon type
+      briques[rangee][colonne].type = types_set[rangee][colonne];
+      briques[rangee][colonne].x = colonne * (BRICK_W + 1) + 1;
+      briques[rangee][colonne].y = rangee * (BRICK_H + 1) + 1;
+      if (briques[rangee][colonne].type == 1) {
         briques[rangee][colonne].state = 1;
         briques[rangee][colonne].img = brick1;
       } else if (briques[rangee][colonne].type == 2) {
-        briques[rangee][colonne].state = 2;//type 2, plus solide
+        briques[rangee][colonne].state = 2;
         briques[rangee][colonne].img = brick2;
       } else if (briques[rangee][colonne].type == 3) {
-        //type 3 indestructible (brique détruite et collision ignorée quand state <= 0, mais >-2)
         briques[rangee][colonne].state = -2;
         briques[rangee][colonne].img = brick3;
       } else if (briques[rangee][colonne].type == 4) {
@@ -81,7 +85,10 @@ void initGame() {
           briques[rangee][colonne].img = brick11;
           briques[rangee][colonne].speedY = seqLvl6inv[0][1];
           briques[rangee][colonne].speedX = seqLvl6inv[0][0];
+      } else if (briques[rangee][colonne].type == 0) {//les briques dont le type est zéro sont détruite d'entrée de jeu pour laisser un espace vide.
+        briques[rangee][colonne].state = -1;
       }
+      
     }
   }
 }

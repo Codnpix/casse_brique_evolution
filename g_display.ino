@@ -1,6 +1,5 @@
 //DISPLAY
 void drawBackground(int index) {
-  //gb.display.drawImage(0,0, bg_1, gb.display.width(), gb.display.height());
   gb.display.drawImage(0,0, backgrounds[index - 1], gb.display.width(), gb.display.height());
 }
 
@@ -42,6 +41,8 @@ void displayGame() {
   }
   else if (levelNameScreen) {
     displayLevelName();
+  } else if (!gameOn) {
+    displayMenu();
   }
   else {
     gb.display.clear();
@@ -69,9 +70,14 @@ void displayLevelName() {
   gb.display.clear();
   drawBackground(currentLevel);
   gb.display.fontSize = 2;
-  gb.display.setCursor(14, gb.display.height() / 2);
+  gb.display.setCursor(14, gb.display.height() / 3);
   gb.display.print("LEVEL ");
-  gb.display.print(currentLevel);
+  gb.display.println(currentLevel);
+  gb.display.fontSize = 1;
+  gb.display.setColor(YELLOW);
+  gb.display.setCursorX(20);
+  gb.display.println(levelNames[currentLevel - 1]);
   delay(800);
   levelNameScreen = false;
+  gameOn = true;
 }

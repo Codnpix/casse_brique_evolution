@@ -1,11 +1,12 @@
 #include <Gamebuino-Meta.h>
 
+bool gameOn;
 bool launched;
 bool win;
 bool lose;
 bool levelNameScreen;
 
-int currentLevel = 4;
+int currentLevel = 1;
 const int NB_LEVELS = 6;
 
 //briques
@@ -55,7 +56,7 @@ int padX;
 //type 2 : hard
 //type 3: metal
 
-const int levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
+const char levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
   {
     {0,1,1,1,1,1,1,0},
     {0,2,0,2,1,0,2,0},
@@ -170,3 +171,11 @@ Image bg_6 = Image(bg_6Data);
 const Image backgrounds[NB_LEVELS] = {
   bg_1, bg_2, bg_3, bg_4, bg_5, bg_6
 };
+const String levelNames[NB_LEVELS] = {
+  "Down Town",
+  "Industrial",
+  "Space Colony",
+  "Railway",
+  "Diesel power",
+  "Reactor"
+  };
