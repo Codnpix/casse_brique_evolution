@@ -47,13 +47,11 @@ void displayGame() {
   else {
     gb.display.clear();
     drawBackground(currentLevel);
-    //palette
-    gb.display.setColor(GRAY);
-    gb.display.fillRect(padX, PAD_Y, PAD_W, PAD_H);
-    //balle
-    gb.display.setColor(YELLOW);
-    gb.display.fillRect(ballX, ballY, BALL_SIZE, BALL_SIZE);
-    //briques
+    //paddle
+    gb.display.drawImage(padX, PAD_Y, paddle, PAD_W, PAD_H);
+    //ball
+    gb.display.drawImage(ballX, ballY, ball, BALL_SIZE, BALL_SIZE);
+    //bricks
     for (int rangee = 0; rangee < NB_RANGEES; rangee ++) {
       for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
         if (briques[rangee][colonne].state <= 0 && briques[rangee][colonne].state > -2) { //don't draw destroyed bricks
@@ -70,12 +68,12 @@ void displayLevelName() {
   gb.display.clear();
   drawBackground(currentLevel);
   gb.display.fontSize = 2;
-  gb.display.setCursor(14, gb.display.height() / 3);
+  gb.display.setCursor(13, gb.display.height() / 3);
   gb.display.print("LEVEL ");
   gb.display.println(currentLevel);
   gb.display.fontSize = 1;
   gb.display.setColor(YELLOW);
-  gb.display.setCursorX(20);
+  gb.display.setCursorX(16);
   gb.display.println(levelNames[currentLevel - 1]);
   delay(800);
   levelNameScreen = false;

@@ -1,5 +1,4 @@
 //UPDATE
-
 void movePad(char dir[6]) {
   if (dir == "left") {
     if (padX <=0) {
@@ -82,7 +81,7 @@ void updateGame() {
     lose = true;
   }
 
-  //collide ball-brick
+  
   for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
     for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
 
@@ -106,7 +105,8 @@ void updateGame() {
         }
         continue;
       }
-
+      
+      //collide ball-brick
       if (ballRight >= briqueLeft
       && ballLeft <= briqueRight
       && ballTop <= briqueBottom
@@ -147,6 +147,9 @@ void updateGame() {
       }
       if (briques[rangee][colonne].type == 5 && briques[rangee][colonne].state == 1) {
         briques[rangee][colonne].img = brick5_dmg2;
+      }
+      if (briques[rangee][colonne].type == 6 && briques[rangee][colonne].state == 1) {
+        briques[rangee][colonne].img = brick6_dmg;
       }
       if (briques[rangee][colonne].type == 4 && briques[rangee][colonne].state == 1) {
         briques[rangee][colonne].img = brick4_dmg;

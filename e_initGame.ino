@@ -1,10 +1,10 @@
-void loadLevel(int myLevel) {
-   
+//INITIALIZATION
+void loadLevel(int myLevel) { 
   for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
-      for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
-        types_set[rangee][colonne] = levels[myLevel][rangee][colonne];
-      }
+    for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
+      types_set[rangee][colonne] = levels[myLevel][rangee][colonne];
     }
+  }
 }
 
 void initBricks() {
@@ -56,10 +56,9 @@ void initBricks() {
           briques[rangee][colonne].img = brick11;
           briques[rangee][colonne].speedY = seqLvl6inv[0][1];
           briques[rangee][colonne].speedX = seqLvl6inv[0][0];
-      } else if (briques[rangee][colonne].type == 0) {//les briques dont le type est zéro sont détruite d'entrée de jeu pour laisser un espace vide.
+      } else if (briques[rangee][colonne].type == 0) {//bricks of type 0 are initialized as destroyed so they are ignored by display.
         briques[rangee][colonne].state = -1;
       }
-      
     }
   }
 }

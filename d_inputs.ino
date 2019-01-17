@@ -27,5 +27,4 @@ void getInputs() {
       initGame(); 
     }
   }
-  
 }
