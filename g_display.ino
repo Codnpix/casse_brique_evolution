@@ -56,7 +56,7 @@ void displayGame() {
     //briques
     for (int rangee = 0; rangee < NB_RANGEES; rangee ++) {
       for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
-        if (briques[rangee][colonne].state <= 0 && briques[rangee][colonne].state > -2) { //ne pas redessiner les briques détruites
+        if (briques[rangee][colonne].state <= 0 && briques[rangee][colonne].state > -2) { //don't draw destroyed bricks
           continue;
         } else {
           gb.display.drawImage(briques[rangee][colonne].x, briques[rangee][colonne].y, briques[rangee][colonne].img, BRICK_W, BRICK_H);

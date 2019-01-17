@@ -9,7 +9,7 @@ bool levelNameScreen;
 int currentLevel = 1;
 const int NB_LEVELS = 6;
 
-//briques
+//bricks
 const int BRICK_H = 4;//hauteur d'une brique
 const int NB_COLONNES = 8;//nb colonnes tableau de briques
 const int NB_RANGEES = 8;//nb rangees tableau de briques
@@ -29,14 +29,13 @@ struct Brique {
   unsigned long deathTime;
 };
 
-//déclaration du tableau de briques
+//the array of actual bricks
 struct Brique briques[NB_RANGEES][NB_COLONNES];
 
-//declaration de la carte des types de briques.
-//assignée en fonction du niveau chargé dans initGame.
+//this array will be filled from levels array on loadLevel()
 int types_set[NB_RANGEES][NB_COLONNES] = {};
 
-//balle
+//ball
 float ballX;
 float speedX;//declarés en float pour pouvoir calculer une variation d'angle
 float ballY;
@@ -45,17 +44,13 @@ const int BALL_SIZE = 2;//balle carrée 2 px coté
 const float ANGLE_CORRECTOR = 0.25;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
 const float MAX_SPEED_X = 0.7;
 
-//palette
+//paddle
 const int PAD_W = 14;
 const int PAD_H = 2;
 const int PAD_Y = gb.display.height() - PAD_H - 4;
 int padX;
 
-//LEVELS (maps de types de briques)
-//type 1 : normal
-//type 2 : hard
-//type 3: metal
-
+//LEVELS (types of bricks arrays)
 const char levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
   {
     {0,1,1,1,1,1,1,0},
@@ -118,7 +113,8 @@ const char levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
     {0,0,0,0,0,0,8,9}
   }
 };
-//facteur de largeurs de colonnes et de rangées pour les mouvements du level5;
+
+//bricks moves values for each level {startX, startY, endX, endY, startSpeedX, StartSpeedY, endSpeedX, endSpeedY}
 int edgesXY[NB_LEVELS][8] = {
   {0,0,0,0,0,0,0,0},
   {0,0,0,0,0,0,0,0},
@@ -126,15 +122,16 @@ int edgesXY[NB_LEVELS][8] = {
   {0,0,0,0,0,0,0,0},
   {0,0,-1,1,-1,1,1,-1},
   {0,0,-6,-6,0,0,0,0}
-  };//rangées : niveaux; colonnes : {départX, départY, arrivéeX, arrivéeY, speedXdépart, speedYdépart, speedXArrivée, speedYArrivée}
-  //autre essai implémentation mouvement brique- essai pour level6 brique type8 :
-int seqLvl6[4][2] = {
+  };
+  
+
+int seqLvl6[4][2] = {//speedX and speedY valued pattern for level6 (just for trying...)
     {0,-1},
     {-1,0},
     {0,1},
     {1,0}
-  };//rangée : cran de la sequence - colonne: speedX, speedY
-int seqLvl6inv[4][2] = {
+  };
+int seqLvl6inv[4][2] = {//same for the second group of moving bricks
   {0,1},
   {1,0},
   {0,-1},

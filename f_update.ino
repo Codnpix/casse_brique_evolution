@@ -1,6 +1,5 @@
 //UPDATE
 
-//bouger la palette
 void movePad(char dir[6]) {
   if (dir == "left") {
     if (padX <=0) {
@@ -51,20 +50,20 @@ void updateGame() {
   if (int_ballX + BALL_SIZE > padX
   && int_ballX - BALL_SIZE < padX + PAD_W
   && ballBottom > PAD_Y) {
-    float dist = (ballX + BALL_SIZE / 2) - (padX + PAD_W / 2);//calculer la position de la balle par rapport au centre de la palette
+    float dist = (ballX + BALL_SIZE / 2) - (padX + PAD_W / 2);
     if (dist != 0) {//éviter la division par 0
-      speedX = 1 / (1/ dist);//calculer le sens et la valeur de l'angle du rebond en fonction de la position de la balle
+      speedX = 1 / (1/ dist);
     } else {
       speedX = 0;
     }
     speedY *= -1;
   }
   
-  if (ballTop <= -2) {//collision plafond
+  if (ballTop <= -2) {//collide top wall
     speedY *= -1;
   }
     
-  if (ballRight >= gb.display.width() || ballLeft <= 0) {//collision murs
+  if (ballRight >= gb.display.width() || ballLeft <= 0) {//collide side walls
     if (speedX > 0) {
       if (fabs(speedX <= 0.35)) {
         speedX += ANGLE_CORRECTOR;
@@ -78,12 +77,12 @@ void updateGame() {
     }
     speedX *= -1;
   }
-  //perdu !(si on passe en dessous de la ligne sous la palette
+  //passed bellow paddle, you lose!
   if (ballY + BALL_SIZE > PAD_Y + PAD_H + 1) {
     lose = true;
   }
 
-  //collisions briques
+  //collide ball-brick
   for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
     for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
 
@@ -92,9 +91,9 @@ void updateGame() {
       int briqueBottom = briques[rangee][colonne].y + BRICK_H;
       int briqueRight = briques[rangee][colonne].x + BRICK_W;
 
-      //si la brique a été détruite, ignorer la collision (sauf pour les briques métal (type3);
+      //ignore destroyed bricks
       if(briques[rangee][colonne].state <= 0 && briques[rangee][colonne].type != 3 ) {
-        //respawner les briques type 8 9 10 11 si la tempo est passée
+        //respawn bricks type 8 9 10 11 after interval is passed
         if (briques[rangee][colonne].type == 8 
         || briques[rangee][colonne].type == 9 
         || briques[rangee][colonne].type == 10 
@@ -111,35 +110,35 @@ void updateGame() {
       if (ballRight >= briqueLeft
       && ballLeft <= briqueRight
       && ballTop <= briqueBottom
-      && ballBottom >= briqueTop) {//si la balle entre en collision avec une des 4 côtés de la brique
-        if (!touched) {//vrai une seule fois par collision, pour éviter quelques bugs...
+      && ballBottom >= briqueTop) {
+        if (!touched) {
           if (ballTop <= briqueBottom - 1
-          && ballBottom >= briqueTop + 1) {//si la balle est à hauteur des côtés de la brique
-            if (ballRight > briqueRight) {//côté droit
-              if (abs(speedX) < 0.35) speedX = (1+ ANGLE_CORRECTOR);//si l'angle en X est trop faible, le corriger un peu
+          && ballBottom >= briqueTop + 1) {
+            if (ballRight > briqueRight) {
+              if (abs(speedX) < 0.35) speedX = (1+ ANGLE_CORRECTOR);
               else speedX = 1;
             }
-            else if (ballLeft < briqueLeft) {//côté gauche
+            else if (ballLeft < briqueLeft) {
               if (abs(speedX) < 0.35) speedX = -(1+ ANGLE_CORRECTOR);
               else speedX = -1;
             }
             
           }
-          else if (ballTop >= briqueBottom - 1) {//si la balle tape le bas de la brique
+          else if (ballTop >= briqueBottom - 1) {
             speedY = 1;
           }
-          else if (ballBottom <= briqueTop + 1) {//si la balle tape le haut de la brique
+          else if (ballBottom <= briqueTop + 1) {
             speedY = -1;
           }
-          //quelle que soit l'endroit de la collision
+          
           gb.sound.playTick();
-          briques[rangee][colonne].state --;//abimer ou détruire la brique
-          touched = true;//pour ne pas risquer de rerentrer en boucle dans la condition de collision
+          briques[rangee][colonne].state --;
+          touched = true;
         }
-        else continue;//si pas de collision, ne rien faire
+        else continue;
       }
 
-      //changer l'image des brique dures quand elles ont pris un coup mais pas encore détruite
+      //update images for damaged bricks - not destroyed yet
       if (briques[rangee][colonne].type == 2 && briques[rangee][colonne].state == 1) {
         briques[rangee][colonne].img = brick2_dmg;
       }
@@ -168,7 +167,7 @@ void updateGame() {
         briques[rangee][colonne].img = brick11;
       }
       
-      //jouer un son quand une brique est détruite
+      //play sound when a brick is destroyed
       if (briques[rangee][colonne].state <=0 && briques[rangee][colonne].type != 3) {
         gb.sound.playOK();
       }
@@ -180,7 +179,7 @@ void updateGame() {
         }
       
 
-      //briques défilantes vers la droite(types 4 et 5)
+      //moving bricks, linear loop left to right(types 4 et 5)
       if (briques[rangee][colonne].type == 4 || briques[rangee][colonne].type == 5) {
         briques[rangee][colonne].x += 1;
         if (briques[rangee][colonne].x >= gb.display.width()) {
@@ -188,7 +187,7 @@ void updateGame() {
         }
       }
       
-      //briques oscillantes (types 6 et 7)
+      //moving bricks, switch left to right then right to left... (types 6 et 7)
       //6 : mvt horizontal
       if (briques[rangee][colonne].type == 6) {
         briques[rangee][colonne].x += briques[rangee][colonne].speedX;
@@ -207,59 +206,59 @@ void updateGame() {
           briques[rangee][colonne].speedY = edgesXY[currentLevel-1][7];
         }
       }
-      //brique8 et 9 mouvement en rectangle
+      //bricks types 8 and 9, rectangle move
       if (briques[rangee][colonne].type == 8 || briques[rangee][colonne].type == 9) {
         briques[rangee][colonne].y += briques[rangee][colonne].speedY;
         briques[rangee][colonne].x += briques[rangee][colonne].speedX;
         
-        // en bas à droite vers en haut à droit
+        //downright to upright
         if ((briques[rangee][colonne].x >= (colonne + edgesXY[currentLevel - 1][0]) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y >= (rangee + edgesXY[currentLevel - 1][1]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6[0][0];
           briques[rangee][colonne].speedY = seqLvl6[0][1];
         } 
-        //haut droite vers haut gauche
+        //upright to upleft
         else if ((briques[rangee][colonne].x >= (colonne + edgesXY[currentLevel - 1][0]) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y <= (rangee + edgesXY[currentLevel - 1][3]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6[1][0];
           briques[rangee][colonne].speedY = seqLvl6[1][1];
         }
-        //haut gauche vers bas gauche
+        //upleft to downleft
         else if ((briques[rangee][colonne].x <= (colonne + edgesXY[currentLevel - 1][2]) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y <= (rangee + edgesXY[currentLevel - 1][3]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6[2][0];
           briques[rangee][colonne].speedY = seqLvl6[2][1];
         }
-        //bas gauche vers bas droite
+        //downleft to downright
         else if ((briques[rangee][colonne].x <= (colonne + edgesXY[currentLevel - 1][2] ) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y >= (rangee + edgesXY[currentLevel - 1][1]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6[3][0];
           briques[rangee][colonne].speedY = seqLvl6[3][1];
         }
       }
-       //brique10 et 11 mouvement en rectangle inverse de 8 et 9
+       //bricks types 10 and 11, rectangle move (invert from types 8 9)
       if (briques[rangee][colonne].type == 10 || briques[rangee][colonne].type == 11) {
         briques[rangee][colonne].y += briques[rangee][colonne].speedY;
         briques[rangee][colonne].x += briques[rangee][colonne].speedX;
-        // en haut gauche vers bas gauche
+        //upleft to downleft
         if ((briques[rangee][colonne].x <= (colonne + edgesXY[currentLevel - 1][0]) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y <= (rangee + edgesXY[currentLevel - 1][1]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6inv[0][0];
           briques[rangee][colonne].speedY = seqLvl6inv[0][1];
         } 
-        //bas gauche vers bas droite
+        //downleft to downright
         else if ((briques[rangee][colonne].x <= (colonne + edgesXY[currentLevel - 1][0]) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y >= (rangee - edgesXY[currentLevel - 1][3]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6inv[1][0];
           briques[rangee][colonne].speedY = seqLvl6inv[1][1];
         }
-        //bas droite vers haut droite
+        //downright to upright
         else if ((briques[rangee][colonne].x >= (colonne - edgesXY[currentLevel - 1][2]) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y >= (rangee - edgesXY[currentLevel - 1][3]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6inv[2][0];
           briques[rangee][colonne].speedY = seqLvl6inv[2][1];
         }
-        //haut droite vers haut gauche
+        //upright to upleft
         else if ((briques[rangee][colonne].x >= (colonne - edgesXY[currentLevel - 1][2]) * (BRICK_W + 1) + 1)
         && (briques[rangee][colonne].y <= (rangee + edgesXY[currentLevel - 1][1]) * (BRICK_H + 1) + 1)){
           briques[rangee][colonne].speedX = seqLvl6inv[3][0];
@@ -268,7 +267,7 @@ void updateGame() {
       }
       
       bool zeroBriques = true;
-      //verifier s'il reste des briques (sauf metal)
+      //check remaining bricks (except for metal bricks)
       for (int x = 0; x < NB_RANGEES; x++) {
         for (int y = 0; y < NB_COLONNES; y++) {
           if (briques[x][y].state > 0) {
@@ -282,7 +281,7 @@ void updateGame() {
     }
   }
   
-  speedX = calc_speedX(speedX);//recalculer speedX pour qu'il ne dépasse jamais sa vitesse max
+  speedX = calc_speedX(speedX);
   
   ballX += speedX;
   ballY += speedY;

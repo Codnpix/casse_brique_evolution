@@ -1,11 +1,3 @@
-/*void clearLevel() {
-  for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
-      for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
-        types_set[rangee][colonne] = 0;
-      }
-    }
-}*/
-
 void loadLevel(int myLevel) {
    
   for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
@@ -15,29 +7,8 @@ void loadLevel(int myLevel) {
     }
 }
 
-
-void initGame() {
-  if (!gameOn) levelNameScreen = true;
-  
-  if (currentLevel > NB_LEVELS) {
-    currentLevel = 1;
-  }
-  
-  //balle pas encore lancée
-  launched = false;
-  loadLevel(currentLevel - 1);
-
-  //reset position palette
-  padX = gb.display.width() / 2 - PAD_W / 2;
-  
-  //reset position et valeurs balle
-  ballX = padX + (PAD_W / 2) - (BALL_SIZE / 2);
-  ballY = PAD_Y - BALL_SIZE - 1;
-  speedX = 0;
-  speedY = 1;
-
-  //initialiser les briques
-  for (int rangee = 0; rangee < NB_RANGEES; rangee ++) {
+void initBricks() {
+    for (int rangee = 0; rangee < NB_RANGEES; rangee ++) {
     for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
       briques[rangee][colonne].type = types_set[rangee][colonne];
       briques[rangee][colonne].x = colonne * (BRICK_W + 1) + 1;
@@ -91,4 +62,24 @@ void initGame() {
       
     }
   }
+}
+
+void initGame() {
+  if (!gameOn) levelNameScreen = true;
+  
+  if (currentLevel > NB_LEVELS) {
+    currentLevel = 1;
+  }
+
+  launched = false;
+  loadLevel(currentLevel - 1);
+
+  padX = gb.display.width() / 2 - PAD_W / 2;
+  
+  ballX = padX + (PAD_W / 2) - (BALL_SIZE / 2);
+  ballY = PAD_Y - BALL_SIZE - 1;
+  speedX = 0;
+  speedY = 1;
+
+  initBricks();
 }
