@@ -63,7 +63,19 @@ void initBricks() {
   }
 }
 
+void updateSavedLevel() {
+  
+  if (currentLevel > lastUnlockedLevel) {
+    gb.save.set(SAVE_LAST_UNLOCKED_LEVEL, currentLevel);
+  }
+  
+  lastUnlockedLevel = gb.save.get(SAVE_LAST_UNLOCKED_LEVEL);
+}
+
 void initGame() {
+  
+  updateSavedLevel();
+  
   if (!gameOn) levelNameScreen = true;
   
   if (currentLevel > NB_LEVELS) {

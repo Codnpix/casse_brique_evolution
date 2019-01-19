@@ -1,5 +1,9 @@
 void setup() {
   gb.begin();
+  gb.save.config(savefileDefaults);
+  currentLevel = gb.save.get(SAVE_LAST_UNLOCKED_LEVEL);
+  lastUnlockedLevel = gb.save.get(SAVE_LAST_UNLOCKED_LEVEL);
+  chosenLevel = currentLevel;
   displayMenu();
 }
 
@@ -9,7 +13,7 @@ void loop() {
 
   getInputs();
   
-  if (launched) {
+  if (launched && gameOn) {
     updateGame();
   }
   if (!launched) {

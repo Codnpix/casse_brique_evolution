@@ -1,5 +1,11 @@
 #include <Gamebuino-Meta.h>
 
+//save config
+#define SAVE_LAST_UNLOCKED_LEVEL 0
+const SaveDefault savefileDefaults[] = {
+  {SAVE_LAST_UNLOCKED_LEVEL, SAVETYPE_INT, 1, 0}
+};
+
 //DECALARATIONS
 
 bool gameOn;
@@ -8,7 +14,9 @@ bool win;
 bool lose;
 bool levelNameScreen;
 
-int currentLevel = 1;
+int currentLevel;
+int lastUnlockedLevel;
+int chosenLevel;
 const int NB_LEVELS = 6;
 
 //bricks

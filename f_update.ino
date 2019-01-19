@@ -32,7 +32,6 @@ float calc_speedX(float speedX) {
   return speedX;
 }
 
-
 void updateGame() {
   
   bool touched = false;
@@ -288,4 +287,5 @@ void updateGame() {
   
   ballX += speedX;
   ballY += speedY;
+
 }
