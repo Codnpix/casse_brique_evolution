@@ -1,8 +1,12 @@
 void setup() {
   gb.begin();
-  gb.save.config(savefileDefaults);
-  currentLevel = gb.save.get(SAVE_LAST_UNLOCKED_LEVEL);
-  lastUnlockedLevel = gb.save.get(SAVE_LAST_UNLOCKED_LEVEL);
+  
+  //gb.save.config(savefileDefaults);
+  
+  lastUnlockedLevel = max(1, gb.save.get(SAVE_LAST_UNLOCKED_LEVEL));
+
+  currentLevel = lastUnlockedLevel;
+
   chosenLevel = currentLevel;
   displayMenu();
 }

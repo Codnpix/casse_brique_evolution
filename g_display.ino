@@ -34,9 +34,11 @@ void displayWinLose(char winOrLose[5]) {
 void displayGame() {
 
   if (lose) {
+    gameOn = false;
     displayWinLose("lose");
   }
   else if (win) {
+    gameOn = false;
     displayWinLose("win");
   }
   else if (levelNameScreen) {
@@ -68,11 +70,12 @@ void displayLevelName() {
   gb.display.clear();
   drawBackground(currentLevel);
   gb.display.fontSize = 2;
-  gb.display.setCursor(13, gb.display.height() / 3);
+  gb.display.setCursor(13, gb.display.height() / 4);
   gb.display.print("LEVEL ");
   gb.display.println(currentLevel);
   gb.display.fontSize = 1;
   gb.display.setColor(YELLOW);
+  gb.display.setCursorY(gb.display.height() /2);
   gb.display.setCursorX(16);
   gb.display.println(levelNames[currentLevel - 1]);
   delay(800);
