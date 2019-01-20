@@ -5,7 +5,6 @@
 #define SAVE_LAST_UNLOCKED_LEVEL 0
 
 //DECALARATIONS
-
 bool gameOn;
 bool launched;
 bool win;
