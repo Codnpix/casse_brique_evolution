@@ -1,10 +1,8 @@
 #include <Gamebuino-Meta.h>
+#include "sounds.h"
 
 //save config
 #define SAVE_LAST_UNLOCKED_LEVEL 0
-/*const SaveDefault savefileDefaults[] = {
-  {SAVE_LAST_UNLOCKED_LEVEL, SAVETYPE_INT, 1, 0}
-};*/
 
 //DECALARATIONS
 
