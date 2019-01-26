@@ -100,3 +100,14 @@ const String levelNames[NB_LEVELS] = {
   "Diesel Power",
   "  Reactor  "
   };
+
+const char* levelSongs[NB_LEVELS] = {
+  "gb_breakout_lv1.wav",
+  "gb_breakout_lv2.wav",
+  "gb_breakout_lv1.wav",
+  "gb_breakout_lv2.wav",
+  "gb_breakout_lv1.wav",
+  "gb_breakout_lv2.wav"
+};
+const char* winSound = "gb_breakout_win.wav";
+const char* loseSound = "gb_breakout_lose.wav";

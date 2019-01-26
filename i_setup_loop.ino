@@ -1,5 +1,6 @@
 void setup() {
   gb.begin();
+  gb.sound.play("TEST.WAV", true);
   
   //gb.save.config(savefileDefaults);
   

@@ -77,7 +77,7 @@ void updateSavedLevel() {
 }
 
 void initGame() {
-  
+  songPlaying = false;
   updateSavedLevel();
   
   if (!gameOn) levelNameScreen = true;

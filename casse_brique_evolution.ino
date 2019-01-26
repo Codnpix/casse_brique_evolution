@@ -56,3 +56,7 @@ const int PAD_W = 14;
 const int PAD_H = 3;
 const int PAD_Y = gb.display.height() - PAD_H - 4;
 int padX;
+
+uint8_t track = -1;
+bool songPlaying;
+bool winOrLosePlaying;
