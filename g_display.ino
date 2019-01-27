@@ -33,9 +33,10 @@ void displayWinLose(char winOrLose[5]) {
     gb.display.setCursorX(20);
     gb.display.println("win !");
     currentLevel ++;
+    
   }
 
-  delay(2000);
+  delay(2500);
   win = false;
   lose = false;
   initGame();

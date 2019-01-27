@@ -1,8 +1,7 @@
 void setup() {
   gb.begin();
-  gb.sound.play("TEST.WAV", true);
   
-  //gb.save.config(savefileDefaults);
+  menuSongPlaying = false;
   
   lastUnlockedLevel = max(1, gb.save.get(SAVE_LAST_UNLOCKED_LEVEL));
 

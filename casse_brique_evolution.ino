@@ -48,7 +48,7 @@ float speedX;//declarés en float pour pouvoir calculer une variation d'angle
 float ballY;
 float speedY;
 const int BALL_SIZE = 2;//balle carrée 2 px coté
-const float ANGLE_CORRECTOR = 0.25;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
+const float ANGLE_CORRECTOR = 0.20;//ajouter une valeur d'angle lors du prochain rebond si l'angle renvoyé par la palette est trop faible
 const float MAX_SPEED_X = 0.7;
 
 //paddle
@@ -60,3 +60,4 @@ int padX;
 uint8_t track = -1;
 bool songPlaying;
 bool winOrLosePlaying;
+bool menuSongPlaying;

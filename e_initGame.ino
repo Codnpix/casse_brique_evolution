@@ -66,18 +66,19 @@ void initBricks() {
 void updateSavedLevel() {
   if (currentLevel > lastUnlockedLevel) {
     gb.save.del(SAVE_LAST_UNLOCKED_LEVEL);
-    if (gb.save.set(SAVE_LAST_UNLOCKED_LEVEL, currentLevel)) {
+    if (gb.save.set(SAVE_LAST_UNLOCKED_LEVEL, min(currentLevel, NB_LEVELS))) {
       lastUnlockedLevel = gb.save.get(SAVE_LAST_UNLOCKED_LEVEL);
     }
     
   } else {
     gb.save.del(SAVE_LAST_UNLOCKED_LEVEL);
-    gb.save.set(SAVE_LAST_UNLOCKED_LEVEL, lastUnlockedLevel);
+    gb.save.set(SAVE_LAST_UNLOCKED_LEVEL, min(lastUnlockedLevel, NB_LEVELS));
   }
 }
 
 void initGame() {
   songPlaying = false;
+  menuSongPlaying = false;
   updateSavedLevel();
   
   if (!gameOn) levelNameScreen = true;

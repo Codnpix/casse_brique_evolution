@@ -1,5 +1,11 @@
 //MENU
 void displayMenu() {
+
+  if (!menuSongPlaying) {
+    gb.sound.stop(track);
+    track = gb.sound.play(menuSong);
+    menuSongPlaying = true;
+  }
   
   gb.display.clear();
   
@@ -36,6 +42,8 @@ void displayMenu() {
 
 bool chooseLevel() {
   bool isUnlocked = true;
+  
+  if (chosenLevel > NB_LEVELS) chosenLevel = NB_LEVELS;
   
   if (gb.buttons.released(BUTTON_LEFT)) {
       if (chosenLevel == 1) chosenLevel = NB_LEVELS;
