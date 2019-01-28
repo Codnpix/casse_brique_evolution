@@ -1,5 +1,5 @@
 //LEVELS (types of bricks arrays)
-const char levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
+const uint8_t levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
   {
     {0,1,1,1,1,1,1,0},
     {0,2,0,2,1,0,2,0},
@@ -85,7 +85,7 @@ int seqLvl6inv[4][2] = {//same for the second group of moving bricks
   {0,-1},
   {-1,0}
 };
-const int RESPAWN_INTERVAL = 18000;//bricks (type 8 9 10 11) respawn after 18s in level6
+const uint16_t RESPAWN_INTERVAL = 18000;//bricks (type 8 9 10 11) respawn after 18s in level6
 
 
 const Image backgrounds[NB_LEVELS] = {
@@ -100,3 +100,15 @@ const char * levelNames[NB_LEVELS] = {
   "Diesel Power",
   "  Reactor  "
   };
+
+const char* levelSongs[NB_LEVELS] = {
+  "gb_breakout_lv1.wav",
+  "gb_breakout_lv2.wav",
+  "gb_breakout_lv3.wav",
+  "gb_breakout_lv4.wav",
+  "gb_breakout_lv5.wav",
+  "gb_breakout_lv6.wav"
+};
+const char* winSound = "gb_breakout_win.wav";
+const char* loseSound = "gb_breakout_lose.wav";
+const char* menuSong = "gb_breakout_menu.wav";

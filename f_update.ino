@@ -37,12 +37,12 @@ void updateGame() {
   bool touched = false;
   unsigned long currentTime = millis();
   
-  int int_ballX = floor(ballX);
-  int int_ballY = floor(ballY);
-  int ballTop = int_ballY;
-  int ballBottom = int_ballY + BALL_SIZE;
-  int ballLeft = int_ballX;
-  int ballRight = int_ballX + BALL_SIZE;
+  int8_t int_ballX = floor(ballX);
+  int8_t int_ballY = floor(ballY);
+  int8_t ballTop = int_ballY;
+  int8_t ballBottom = int_ballY + BALL_SIZE;
+  int8_t ballLeft = int_ballX;
+  int8_t ballRight = int_ballX + BALL_SIZE;
 
   //collision balle/palette
   if (int_ballX + BALL_SIZE > padX
@@ -84,13 +84,13 @@ void updateGame() {
   }
 
   
-  for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
-    for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
+  for (uint8_t rangee = 0; rangee < NB_RANGEES; rangee++) {
+    for (uint8_t colonne = 0; colonne < NB_COLONNES; colonne++) {
 
-      int briqueLeft = briques[rangee][colonne].x;
-      int briqueTop = briques[rangee][colonne].y;
-      int briqueBottom = briques[rangee][colonne].y + BRICK_H;
-      int briqueRight = briques[rangee][colonne].x + BRICK_W;
+      int8_t briqueLeft = briques[rangee][colonne].x;
+      int8_t briqueTop = briques[rangee][colonne].y;
+      int8_t briqueBottom = briques[rangee][colonne].y + BRICK_H;
+      int8_t briqueRight = briques[rangee][colonne].x + BRICK_W;
 
       //ignore destroyed bricks
       if(briques[rangee][colonne].state <= 0 && briques[rangee][colonne].type != 3 ) {
@@ -274,8 +274,8 @@ void updateGame() {
       
       bool zeroBriques = true;
       //check remaining bricks (except for metal bricks)
-      for (int x = 0; x < NB_RANGEES; x++) {
-        for (int y = 0; y < NB_COLONNES; y++) {
+      for (uint8_t x = 0; x < NB_RANGEES; x++) {
+        for (uint8_t y = 0; y < NB_COLONNES; y++) {
           if (briques[x][y].state > 0) {
             zeroBriques = false;
           }

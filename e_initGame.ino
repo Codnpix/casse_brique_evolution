@@ -1,15 +1,15 @@
 //INITIALIZATION
 void loadLevel(int myLevel) { 
-  for (int rangee = 0; rangee < NB_RANGEES; rangee++) {
-    for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
+  for (uint8_t rangee = 0; rangee < NB_RANGEES; rangee++) {
+    for (uint8_t colonne = 0; colonne < NB_COLONNES; colonne++) {
       types_set[rangee][colonne] = levels[myLevel][rangee][colonne];
     }
   }
 }
 
 void initBricks() {
-    for (int rangee = 0; rangee < NB_RANGEES; rangee ++) {
-    for (int colonne = 0; colonne < NB_COLONNES; colonne++) {
+    for (uint8_t rangee = 0; rangee < NB_RANGEES; rangee ++) {
+    for (uint8_t colonne = 0; colonne < NB_COLONNES; colonne++) {
       briques[rangee][colonne].type = types_set[rangee][colonne];
       briques[rangee][colonne].x = colonne * (BRICK_W + 1) + 1;
       briques[rangee][colonne].y = rangee * (BRICK_H + 1) + 1;
