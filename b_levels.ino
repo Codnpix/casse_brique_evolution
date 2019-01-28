@@ -63,7 +63,7 @@ const uint8_t levels[NB_LEVELS][NB_RANGEES][NB_COLONNES] = {
 };
 
 //bricks moves values for each level {startX, startY, endX, endY, startSpeedX, StartSpeedY, endSpeedX, endSpeedY}
-int edgesXY[NB_LEVELS][8] = {
+int8_t edgesXY[NB_LEVELS][8] = {
   {0,0,0,0,0,0,0,0},
   {0,0,0,0,0,0,0,0},
   {0,0,0,0,0,0,0,0},
@@ -73,13 +73,13 @@ int edgesXY[NB_LEVELS][8] = {
   };
   
 
-int seqLvl6[4][2] = {//speedX and speedY valued pattern for level6 (just for trying...)
+int8_t seqLvl6[4][2] = {//speedX and speedY valued pattern for level6 (just for trying...)
     {0,-1},
     {-1,0},
     {0,1},
     {1,0}
   };
-int seqLvl6inv[4][2] = {//same for the second group of moving bricks
+int8_t seqLvl6inv[4][2] = {//same for the second group of moving bricks
   {0,1},
   {1,0},
   {0,-1},
