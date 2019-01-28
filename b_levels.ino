@@ -92,7 +92,7 @@ const Image backgrounds[NB_LEVELS] = {
   bg_1, bg_2, bg_3, bg_4, bg_5, bg_6
 };
 
-const String levelNames[NB_LEVELS] = {
+const char * levelNames[NB_LEVELS] = {
   " Down Town ",
   " Industrial ",
   "Space Colony",
@@ -100,15 +100,3 @@ const String levelNames[NB_LEVELS] = {
   "Diesel Power",
   "  Reactor  "
   };
-
-const char* levelSongs[NB_LEVELS] = {
-  "gb_breakout_lv1.wav",
-  "gb_breakout_lv2.wav",
-  "gb_breakout_lv3.wav",
-  "gb_breakout_lv4.wav",
-  "gb_breakout_lv5.wav",
-  "gb_breakout_lv6.wav"
-};
-const char* winSound = "gb_breakout_win.wav";
-const char* loseSound = "gb_breakout_lose.wav";
-const char* menuSong = "gb_breakout_menu.wav";
